@@ -50,181 +50,90 @@
     </section>
     <!-- END section -->
 
-    <?php  
-      $namaErr = "";
-      $alamatErr = "";
-      $teleponErr = "";
-      $emailErr = "";
-    
-      $nama = "";
-      $alamat = "";
-      $telepon = "";
-      $email = "";
-      $username = "";
-      $password = "";
-
-      if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (empty($_POST["nama"])) 
-        {
-          $namaErr = "Nama harus diisi";
-        }
-        else
-        {
-          $nama = test_input($_POST["nama"]);
-          if (!preg_match("/^[a-zA-Z]*$/",$nama))
-          {
-            $namaErr = "Nama hanya boleh huruf dan spasi";
-          }
-        }
-
-        if (empty($_POST["alamat"])) {
-          $alamatErr = "Alamat harus diisi";
-        } else {
-          $alamat = test_input($_POST["alamat"]);
-        }
-
-        if (empty($_POST["telepon"])) {
-          $teleponErr = "Telepon harus diisi";
-        } else{
-          $telepon = test_input($_POST["telepon"]);
-          if (!is_numeric($telepon)) {
-            $teleponErr = "Telepon hanya boleh angka";
-          }
-        }
-
-        if (empty($_POST["email"])) {
-          $emailErr = "Email harus diisi";
-        } else{
-          $nama = test_input($_POST["email"]);
-          if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $emailErr = "Format email salah";
-          }
-        }
-
-        if (empty($_POST["username"])) {
-          $username = "";
-        } else {
-          $username = test_input($_POST["username"]);
-        }
-
-        if (empty($_POST["password"])) {
-          $password = "";
-        } else {
-          $password = test_input($_POST["password"]);
-        }
-
-      }
-
-      function test_input($data){
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-      }
-    ?>
-
     <section class="site-section">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <h2 class="mb-5">Buat Akun Baru</h2>
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <form name="validasi_register" method="post" action="buatakun_cek.php" onsubmit="return validasiRegister()">
                   <div class="row">
                     <div class="col-md-12 form-group">
-                      <label for="nama">Nama Lengkap</label>
-                      <input type="text" name="nama" class="form-control <?php echo ($namaErr !="" ? "is-invalid" : ""); ?>" value="<?php echo $nama; ?>">
-                      <span class="warning">* <?php echo $namaErr; ?></span>
-                      <br><br>
+                      <label for="nama">Nama Lengkap<sup class="text-danger">*</sup></label>
+                      <input type="text" name="nama" class="form-control" value="<?php echo isset($_GET['nama'])? $_GET['nama']:''; ?>">
+                      <p class="text-danger nama-kosong-alert">*Nama wajib diisi</p>
+                      <p class="text-danger nama-karakter-alert">*Nama hanya boleh mengandung karakter huruf dan spasi</p>
+                      <br>
                     </div>
                   </div>
 
                   <div class="row">
                     <div class="col-md-12 form-group">
-                      <label for="alamat">Alamat</label>
-                      <textarea name="alamat" class="form-control " cols="30" rows="8"><?php echo $alamat; ?></textarea>
-                      <br><br>
+                      <label for="alamat">Alamat<sup class="text-danger">*</sup></label>
+                      <textarea name="alamat" class="form-control " cols="30" rows="8"><?php echo isset($_GET['alamat'])? $_GET['alamat']:''; ?></textarea>
+                      <p class="text-danger alamat-kosong-alert">*Alamat wajib diisi</p>
+                      <br>
                     </div>
                   </div>
 
                   <div class="row">
                     <div class="col-md-6 form-group">
-                      <label for="telepon">Telepon</label>
-                      <input type="number" name="telepon" class="form-control" value="<?php echo $telepon; ?>">
-                      <span class="error">* <?php echo $teleponErr; ?></span>
-                      <br><br>
+                      <label for="telepon">Telepon<sup class="text-danger">*</sup></label>
+                      <input type="text" name="telepon" class="form-control" value="<?php echo isset($_GET['telepon'])? $_GET['telepon']:''; ?>">
+                      <p class="text-danger telepon-kosong-alert">*Nomor Telepon wajib diisi</p>
+                      <p class="text-danger telepon-karakter-alert">*Nomor Telepon hanya boleh angka</p>
+                      <br>
                     </div>
 
                     <div class="col-md-6 form-group">
-                      <label for="email">Email</label>
-                      <input type="email" name="email" class="form-control" value="<?php echo $email; ?>">
-                      <span class="error">* <?php echo $emailErr; ?></span>
-                      <br><br>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-6 form-group">
-                      <label for="username">Username</label>
-                      <input type="username" name="username" class="form-control" value="<?php echo $username; ?>">
-                    </div>
-
-                    <div class="col-md-6 form-group">
-                      <label for="password">Password</label>
-                      <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
+                      <label for="email">Email<sup class="text-danger">*</sup></label>
+                      <input type="text" name="email" class="form-control" value="<?php echo isset($_GET['email'])? $_GET['email']:''; ?>">
+                      <p class="text-danger email-kosong-alert">*Email wajib diisi</p>
+                      <p class="text-danger email-karakter-alert">*Format email salah</p>
+                      <p class="text-danger email-exist-alert">*Email sudah digunakan</p>
+                      <br>
                     </div>
                   </div>
 
                   <div class="row">
                     <div class="col-md-6 form-group">
-                      <button class="btn btn-primary" name="save" type="submit">Simpan</button>
+                      <label for="username">Username<sup class="text-danger">*</sup></label>
+                      <input type="username" name="username" class="form-control" value="<?php echo isset($_GET['username'])? $_GET['username']:''; ?>">
+                      <p class="text-danger username-kosong-alert">*Username wajib diisi</p>
+                      <p class="text-danger username-exist-alert">*Username sudah digunakan</p>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                      <label for="password">Password<sup class="text-danger">*</sup></label>
+                      <input type="password" name="password" class="form-control" value="">
+                      <input type="checkbox" name="show_password"> Tampilkan Password
+                      <br><p class="text-danger password-kosong-alert">*Password wajib diisi</p>
+                    </div>
+                  </div>
+
+                  <div class="row mt-5">
+                    <div class="col"></div>
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <center><img src="captcha.php" alt="gambar"></center>
+                      </div>
+                      <div class="form-group">
+                        <center><label>Masukan Captcha<sup class="text-danger">*</sup></label></center>
+                        <center><input name="kodecaptcha" value="" maxlength="5"></center>
+                          <center><p class="kodecaptcha-kosong-alert text-danger">*Kode Captcha wajib diisi</p></center>
+                        <?php if(isset($_GET['captcha_failed'])){ ?>
+                          <center><p class="text-danger kodecaptcha-salah-alert"> <b>*Kode Captcha Salah</b></p></center>
+                        <?php } ?>
+                      </div>
+                    </div>
+                    <div class="col"></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <input class="btn btn-primary" name="save" type="submit" value="simpan">
                     </div>
                   </div>
                 </form>
-
-                <?php  
-                  echo "<h2>Your Input:</h2>";
-                  echo $nama;
-                  echo "<br>";
-                  echo $alamat;
-                  echo "<br>";
-                  echo $telepon;
-                  echo "<br>";
-                  echo $email;
-                  echo "<br>";
-                  echo $username;
-                  echo "<br>";
-                  echo $password;
-                  echo "<br";
-                ?>
-
-                <?php
-                  if (isset($_POST['save'])) 
-                  {
-                    //mengambil isian nama, alamat, telepon, email, username, password
-                    $nama = $_POST["nama"];
-                    $alamat = $_POST["alamat"];
-                    $telepon = $_POST["telepon"];
-                    $email = $_POST["email"];
-                    $username = $_POST["username"];
-                    $password = $_POST["password"];
-
-                    //cek apakah email sudah digunakan
-                    $ambil = $koneksi->query("SELECT * FROM tb_pelanggan WHERE email='$email'");
-                    $yangcocok = $ambil->num_rows;
-                    if ($yangcocok==1) 
-                    {
-                      echo "<script>alert('pendaftaran gagal, email sudah digunakan');</script>";
-                      echo "<script>location='buatakun.php';</script>";
-                    }
-                    else
-                    {
-                      //query insert ke tabel pelanggan
-                      $koneksi->query("INSERT INTO tb_pelanggan (nama, alamat, telepon, email, username, password) VALUES ('$nama','$alamat','$telepon','$email','$username','$password')");
-                      echo "<script>alert('pendaftaran berhasil, silahkan login');</script>";
-                      echo "<script>location='login.php';</script>";
-                    }
-                  }
-                ?> 
               </div>
         </div>
       </div>
@@ -248,5 +157,11 @@
     <script src="js/magnific-popup-options.js"></script>
 
     <script src="js/main.js"></script>
+    <script src="js/validateRegister.js"></script>
+    <?php
+    if(isset($_GET['captcha_failed'])){ 
+      echo "<script> $('input[name=kodecaptcha]').focus(); </script>";
+    }
+    ?>
   </body>
 </html>

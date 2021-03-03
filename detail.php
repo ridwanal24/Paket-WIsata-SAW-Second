@@ -12,6 +12,8 @@
   $ambil = $koneksi->query("SELECT * FROM tb_paketwisata JOIN tb_bus ON tb_paketwisata.id_bus=tb_bus.id_bus WHERE id_paketwisata='$id_paketwisata'");
   $detail = $ambil->fetch_assoc();
 
+  // print_r($detail);
+  // die();
 ?>
 
 <!doctype html>
@@ -62,7 +64,7 @@
           <div class="col-md-5">
             <div class="heading-wrap text-center element-animate">
               <h3><?php echo $detail["nama_paketwisata"]; ?> (<?php echo $detail['lama_paket']; ?>)</h3>
-              <h4>Rp. <?php echo number_format($detail["harga"]); ?>/bus</h4>
+              <h4>Rp. <?php echo number_format($detail["harga_paket"]); ?>/bus</h4>
               <div class="container">
                 <form method="post">
               <div class="form-group">

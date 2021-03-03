@@ -4,7 +4,7 @@ function acakCaptcha() {
     $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
    
 //untuk menyatakan $pass sebagai array
-$pass = array(); 
+$pass = array();
  
    //masukkan -2 dalam string length
     $panjangAlpha = strlen($alphabet) - 2; 

@@ -55,13 +55,15 @@
               <h4 class="sub-heading">Enjoy with our destination</h4>
               <h2 class="heading">Login Pelanggan</h2>
               <div class="container">
-                <form method="post">
+                <form name="login_pelanggan" method="post" action="login_cek.php" onsubmit="return validasiForm()">
                   <div class="form-group">
-                    <label>Username</label>
+                    <label>Username<sup class="text-danger">*</sup></label>
+                      <br><small class="username-alert text-danger float-left">Username wajib diisi</small>
                       <input type="username" class="form-control" name="username">
                   </div>
                   <div class="form-group">
-                    <label>Password</label>
+                    <label>Password<sup class="text-danger">*</sup></label>
+                      <br><small class="password-alert text-danger float-left">Password wajib diisi</small>
                       <input type="password" class="form-control" name="password" id="password">
                   </div>
                   <div class="text-left">
@@ -73,11 +75,15 @@
                     <img src="captcha.php" alt="gambar">
                   </div>
                   <div class="form-group">
-                    <label>Masukan Captcha</label>
+                    <label>Masukan Captcha<sup class="text-danger">*</sup></label>
                     <input name="kodecaptcha" value="" maxlength="5">
+                      <small class="kodecaptcha-alert text-danger">Kode Captcha wajib diisi</small>
+                    <?php if(isset($_GET['captcha_failed'])){ ?>
+                      <small class="text-danger"> <b>Kode Captcha Salah</b></small>
+                    <?php } ?>
                   </div>
 
-                  <button class="btn btn-primary" name="login">Login</button>
+                  <input type='submit' class="btn btn-primary" name="login" value="Login">
                   <div class="text-center">
                     <a class="small btn-link" href="buatakun.php">Buat Akun</a>
                   </div>
@@ -108,48 +114,6 @@
       </div>
     </section>
     <!-- END section -->
-
-     <?php
-    // jika ada tombol login(tombol login ditekan)
-    if (isset($_POST["login"])) 
-    {
-      $username = $_POST["username"];
-      $password = $_POST["password"];
-
-      //lakukan query ngecek akun di tabel pelanggan di database 
-      $ambil = $koneksi->query("SELECT * FROM tb_pelanggan WHERE username='$username' AND password='$password'");
-
-      // ngitung akun yang terambil
-      $akunyangcocok = $ambil->num_rows;
-
-      //jika 1 akun yang cocok, maka akan diloginkan
-      if ($akunyangcocok==1) 
-      {
-        //anda sukses login
-        //mendapatkan akun dalam bentuk array
-        $akun = $ambil->fetch_assoc();
-        //simpan di session pelanggan
-        $_SESSION["pelanggan"] = $akun;
-        echo "<script>alert('anda sukses login');</script>";
-
-        //jika sudah belanja
-        if (isset($_SESSION["keranjang"]) OR !empty($_SESSION["keranjang"])) 
-        {
-          echo "<script>location='checkout.php';</script>";
-        }
-        else
-        {
-          echo "<script>location='riwayat.php';</script>";
-        }
-      }
-      else
-      {
-      //anda gagal login
-      echo "<script>alert('anda gagal login, periksa akun Anda');</script>";
-      echo "<script>location='login.php';</script>";
-      }
-    }
-    ?>
    
     <?php include 'footer.php'; ?>
     
@@ -168,5 +132,40 @@
     <script src="js/magnific-popup-options.js"></script>
 
     <script src="js/main.js"></script>
+    
+    <!-- Form Validation -->
+    <script>
+        $('.username-alert').hide();
+        $('.password-alert').hide();
+        $('.kodecaptcha-alert').hide();
+      function validasiForm(){
+        // set kondisi awal //
+        $('.username-alert').hide();
+        $('.password-alert').hide();
+        $('.kodecaptcha-alert').hide();
+        
+        let status = true;
+        let username = document.forms['login_pelanggan']['username'].value;
+        let password = document.forms['login_pelanggan']['password'].value;
+        let captcha = document.forms['login_pelanggan']['kodecaptcha'].value;
+        
+        if(username == ''){
+        $('.username-alert').show();
+          status = false;
+        }
+        if(password == ''){
+        $('.password-alert').show();
+          status = false;
+        }
+        if(captcha == ''){
+        $('.kodecaptcha-alert').show();
+          status = false;
+        }
+        
+        return status;
+      }
+
+    </script>
+    <!-- --------------- -->
   </body>
 </html>

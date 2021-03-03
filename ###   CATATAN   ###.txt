@@ -22,3 +22,19 @@
            - Yogyakarta-Medan 3
            - dst.
 - Rekomendasi dapat diakses pada menu Paket Wisata -> Rekomendasi Paket Wisata (new) {Dibawah Rekomendasi Paket Wisata ?}
+
+
+=========================================================
+                    VALIDATION FORM
+=========================================================
+
+######========== PERUBAHAN FILE ===========#######
+- detail.php (ketemu bug dikit & sudah di fix)
+- login.php (verifikasi login dan captcha sudah dipindah ke file login_cek.php serta menambah script validasi form)
+- admin/login.php (verifikasi login dan captcha dipindah ke file admin/login_cek.php dan ditambah script validasi form)
+
+######========== PENAMBAHAN FILE ===========#######
+- login_cek.php (file untuk melakukan verifikasi captcha dan data user serta input ke database)
+- admin/login_cek.php (file untuk melakukan verifikasi captcha dan data user serta input ke database)
+- buatakun_cek.php (file untuk melakukan validasi form sekaligus verifikasi captcha dan input data ke database)
+- js/validateRegister.js (file khusus untuk fitur di form registrasi termasuk validasi (menggunakan ajax untuk cek email dan username yang sudah terdaftar))
