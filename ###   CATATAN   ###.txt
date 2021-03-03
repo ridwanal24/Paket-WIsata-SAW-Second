@@ -1,0 +1,24 @@
+######======= PERUBAHAN DATABASE =======######
+- Penambahan tabel 'tb_paketwisata_grup'
+- Penambahan kolom 'id_paketwisata_grup' pada tabel 'tb_paketwisata'
+- Database dapat diimpor dari DB -> paket_wisata (NEW).sql
+
+######========= PERUBAHAN FILE =========######
+- admin/tambahpaket.php (penjelasan ada di dalam file)
+- admin/hapuspaket.php (penjelasan ada di dalam file)
+- admin/tambahalternatif.php (opsi hanya menampilkan paket wisata yang belum diset di tb_alternatif)
+- menu.php (menambah link untuk menuju halaman rekomendasi)
+
+######========= PENAMBAHAN FILE ========######
+- rekomendasi_2_option.php (pemilihan bobot dan paket wisata)
+- rekomendasi_2_result.php (hasil dari perhitungan rekomendasi)
+- admin/js/custom-script.js (untuk fitur pemilihan jenis input pada halaman 'Tambah Paket Wisata')
+
+######======= PENJELASAN SINGKAT =======######
+- Tabel 'tb_paketwisata_grup' dibuat sebagai tabel yang membantu agar sistem rekomendasi spk dapat memilih paket yang ingin diolah (Dalam kasus ini pilihan yang ada didalam paket wisata terpilih).
+- Jika ingin menambah paket untuk tujuan yang sama, bisa memilih 'Tambah Paket Yang Sudah Ada' dan Nama paket yang disimpan akan menyesuaikan secara otomatis.
+  contoh : - Yogyakarta-Medan
+           - Yogyakarta-Medan 2
+           - Yogyakarta-Medan 3
+           - dst.
+- Rekomendasi dapat diakses pada menu Paket Wisata -> Rekomendasi Paket Wisata (new) {Dibawah Rekomendasi Paket Wisata ?}
