@@ -3,7 +3,16 @@
 // -- Inisialisasi alert -- //
 let emailExist = false;
 let usernameExist = false;
+let status = true;
 resetAlert();
+
+let nama;
+let alamat;
+let telepon;
+let email;
+let username;
+let password;
+let captcha;
 
 // Show Password Handle
 $('input[name=show_password]').change(function(){
@@ -51,25 +60,23 @@ $('input[name=username]').on('keyup change',function(){
                 usernameExist = false;
             }
             console.log(usernameExist);
+            resetAlert();
         }
     });
 });
 
+// ===== AFTER PRESSED ===== //
 
-// Fungsi validasi form
-function validasiRegister(){
-    $('.kodecaptcha-salah-alert').hide();
-    resetAlert();
-    let status = true;
-    let nama = document.forms['validasi_register']['nama'].value;
-    let alamat = document.forms['validasi_register']['alamat'].value;
-    let telepon = document.forms['validasi_register']['telepon'].value;
-    let email = document.forms['validasi_register']['email'].value;
-    let username = document.forms['validasi_register']['username'].value;
-    let password = document.forms['validasi_register']['password'].value;
-    let captcha = document.forms['validasi_register']['kodecaptcha'].value;
+// let nama = document.forms['validasi_register']['nama'].value;
+// let alamat = document.forms['validasi_register']['alamat'].value;
+// let telepon = document.forms['validasi_register']['telepon'].value;
+// let email = document.forms['validasi_register']['email'].value;
+// let username = document.forms['validasi_register']['username'].value;
+// let password = document.forms['validasi_register']['password'].value;
+// let captcha = document.forms['validasi_register']['kodecaptcha'].value;
 
-    // Cek Nama Lengkap
+$('[name=nama]').on('keyup change', function(){
+    nama = $(this).val();
     if(nama == ''){
         $('.nama-kosong-alert').show();
         $('input[name=nama]').focus();
@@ -79,17 +86,26 @@ function validasiRegister(){
             $('.nama-karakter-alert').show();
             $('input[name=nama]').focus();
             status= false;
+        } else {
+            resetAlert();
         }
     }
+});
 
-    // Cek Alamat
+$('[name=alamat]').on('keyup change',function(){
+    alamat = $(this).val();
     if(alamat == ''){
         $('.alamat-kosong-alert').show();
         $('input[name=alamat]').focus();
         status = false;
+    } else {
+        resetAlert();
     }
+});
+
+$('[name=telepon]').on('keyup change',function(){
+    telepon = $(this).val();
     
-    // Cek Nomor Telepon
     if(telepon == ''){
         $('.telepon-kosong-alert').show();
         $('input[name=telepon]').focus();
@@ -99,10 +115,14 @@ function validasiRegister(){
             $('.telepon-karakter-alert').show();
             $('input[name=telepon]').focus();
             status = false;
+        } else {
+            resetAlert();
         }
     }
-    
-    // Cek Email
+});
+
+$('[name=email]').on('keyup change', function(){
+    email = $(this).val();
     if(email == ''){
         $('.email-kosong-alert').show();
         $('input[name=email]').focus();
@@ -117,11 +137,15 @@ function validasiRegister(){
                 $('.email-exist-alert').show();
                 $('input[name=email]').focus();
                 status = false;
+            }  else {
+                resetAlert();
             }
         }
     }
-    
-    // Cek Username
+});
+
+$('[name=username]').on('keyup change', function(){
+    username = $(this).val();
     if(username == ''){
         $('.username-kosong-alert').show();
         $('input[name=username]').focus();
@@ -131,23 +155,55 @@ function validasiRegister(){
             $('.username-exist-alert').show();
             $('input[name=username]').focus();
             status = false;
+        }  else {
+            resetAlert();
         }
     }
-    
-    // Cek Password
+});
+
+$('[name=password]').on('keyup change', function(){
+    password = $(this).val();
     if(password == ''){
         $('.password-kosong-alert').show();
         $('input[name=password]').focus();
         status = false;
+    } else {
+        resetAlert();
     }
+});
 
-    // Cek Captcha
+$('[name=kodecaptcha').on('keyup change', function(){
     if(captcha == ''){
         $('.kodecaptcha-kosong-alert').show();
         $('input[name=kodecaptcha]').focus();
         status = false;
+    } else {
+        resetAlert();
     }
+});
+// Cek Nama Lengkap
 
+// Cek Alamat
+
+// Cek Nomor Telepon
+
+// Cek Email
+
+// Cek Username
+
+// Cek Password
+
+// Cek Captcha
+
+// ===== END OF AFTER PRESSED ===== //
+
+
+
+
+// Fungsi validasi form
+function validasiRegister(){
+    $('.kodecaptcha-salah-alert').hide();
+    resetAlert();
     return status;
 }
 
