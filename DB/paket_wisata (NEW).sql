@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 02, 2021 at 12:35 PM
+-- Generation Time: Mar 05, 2021 at 01:58 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -315,6 +315,17 @@ INSERT INTO `tb_pemesanan_paket` (`id_pemesanan_paket`, `id_pemesanan`, `id_pake
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_print_hasil`
+--
+
+CREATE TABLE `tb_print_hasil` (
+  `id` int(11) NOT NULL,
+  `content` mediumtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_subkriteria`
 --
 
@@ -486,6 +497,12 @@ ALTER TABLE `tb_pemesanan_paket`
   ADD KEY `FK_tb_pemesanan_paket_3` (`id_pemesanan`);
 
 --
+-- Indexes for table `tb_print_hasil`
+--
+ALTER TABLE `tb_print_hasil`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tb_subkriteria`
 --
 ALTER TABLE `tb_subkriteria`
@@ -549,7 +566,7 @@ ALTER TABLE `tb_paketwisata_grup`
 -- AUTO_INCREMENT for table `tb_pelanggan`
 --
 ALTER TABLE `tb_pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tb_pembatalan`
@@ -574,6 +591,12 @@ ALTER TABLE `tb_pemesanan`
 --
 ALTER TABLE `tb_pemesanan_paket`
   MODIFY `id_pemesanan_paket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `tb_print_hasil`
+--
+ALTER TABLE `tb_print_hasil`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_subkriteria`

@@ -53,7 +53,8 @@
     <section class="site-section">
       <div class="container">
         <div class="grid fluid">
-            <div class="border padding50">
+            <div class="border padding50 untuk-print-pdf">
+            
               <div class="row mb-5">
                   <div class="col-md-12 heading-wrap text-center mt-3">
                     <h4 class="sub-heading">Our Tour</h4>
@@ -202,8 +203,10 @@ $min = mysqli_fetch_assoc($carimin);
                   </table>
                 </div>
               </div>
-
             </div>
+                  <div class="text-right mt-5">
+                     <button class="btn btn-primary" name="cetakPDF" value="Proses">Cetak PDF</button>
+                  </div>
         </div>
       </div>
     </section>
@@ -226,5 +229,25 @@ $min = mysqli_fetch_assoc($carimin);
     <script src="js/magnific-popup-options.js"></script>
 
     <script src="js/main.js"></script>
+    
+    <script>
+      $('[name=cetakPDF]').click(function(){
+        $('[name=cetakPDF]').attr('disabled',true);
+        $('[name=cetakPDF]').html('Sedang Diproses');
+        $.ajax({
+          method:'POST',
+          url:'rekomendasi_2_cetak.php',
+          data:{
+            content: document.querySelector('.untuk-print-pdf').innerHTML
+          },
+          success: data => {
+            $('[name=cetakPDF]').attr('disabled',false);
+            $('[name=cetakPDF]').html('Print PDF');
+            window.location = 'rekomendasi_2_cetak.php?id_cetak='+data;
+          }
+        });
+      });
+    </script>
+
   </body>
 </html>
