@@ -241,8 +241,8 @@ $min = mysqli_fetch_assoc($carimin);
             content: document.querySelector('.untuk-print-pdf').innerHTML
           },
           success: data => {
-            $('[name=cetakPDF]').attr('disabled',false);
-            $('[name=cetakPDF]').html('Print PDF');
+            // $('[name=cetakPDF]').attr('disabled',false);
+            // $('[name=cetakPDF]').html('Print PDF');
             window.location = 'rekomendasi_2_cetak.php?id_cetak='+data;
           }
         });
