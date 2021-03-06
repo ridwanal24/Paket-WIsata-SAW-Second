@@ -40,7 +40,6 @@ $('input[name=email]').on('keyup change',function(){
                 emailExist = false;
                 status = true;
             }
-            console.log(emailExist);
         }
     });
 });
@@ -61,7 +60,6 @@ $('input[name=username]').on('keyup change',function(){
                 usernameExist = false;
                 status = true;
             }
-            console.log(usernameExist);
             resetAlert();
         }
     });
@@ -89,8 +87,8 @@ $('[name=nama]').on('keyup change', function(){
             $('input[name=nama]').focus();
             status= false;
         } else {
-            resetAlert();
             status = true;
+            resetAlert();
         }
     }
 });
@@ -102,8 +100,8 @@ $('[name=alamat]').on('keyup change',function(){
         $('input[name=alamat]').focus();
         status = false;
     } else {
-        resetAlert();
         status = true;
+        resetAlert();
     }
 });
 
@@ -120,8 +118,8 @@ $('[name=telepon]').on('keyup change',function(){
             $('input[name=telepon]').focus();
             status = false;
         } else {
-            resetAlert();
             status = true;
+            resetAlert();
         }
     }
 });
@@ -143,8 +141,8 @@ $('[name=email]').on('keyup change', function(){
                 $('input[name=email]').focus();
                 status = false;
             }  else {
-                resetAlert();
                 status = true;
+                resetAlert();
             }
         }
     }
@@ -162,8 +160,8 @@ $('[name=username]').on('keyup change', function(){
             $('input[name=username]').focus();
             status = false;
         }  else {
-            resetAlert();
             status = true;
+            resetAlert();
         }
     }
 });
@@ -175,8 +173,8 @@ $('[name=password]').on('keyup change', function(){
         $('input[name=password]').focus();
         status = false;
     } else {
-        resetAlert();
         status = true;
+        resetAlert();
     }
 });
 
@@ -186,8 +184,8 @@ $('[name=kodecaptcha').on('keyup change', function(){
         $('input[name=kodecaptcha]').focus();
         status = false;
     } else {
-        resetAlert();
         status = true;
+        resetAlert();
     }
 });
 // Cek Nama Lengkap
@@ -231,4 +229,5 @@ function resetAlert(){
     $('.password-kosong-alert').hide();
     $('.kodecaptcha-kosong-alert').hide();
     // $('.kodecaptcha-salah-alert').hide();
+    console.log('bisa login? ->', status);
 }
