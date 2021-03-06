@@ -38,6 +38,7 @@ $('input[name=email]').on('keyup change',function(){
                 emailExist = true;
             } else {
                 emailExist = false;
+                status = true;
             }
             console.log(emailExist);
         }
@@ -58,6 +59,7 @@ $('input[name=username]').on('keyup change',function(){
                 usernameExist = true;
             } else {
                 usernameExist = false;
+                status = true;
             }
             console.log(usernameExist);
             resetAlert();
