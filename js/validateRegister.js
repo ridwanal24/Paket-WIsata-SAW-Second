@@ -88,6 +88,7 @@ $('[name=nama]').on('keyup change', function(){
             status= false;
         } else {
             resetAlert();
+            status = true;
         }
     }
 });
@@ -100,6 +101,7 @@ $('[name=alamat]').on('keyup change',function(){
         status = false;
     } else {
         resetAlert();
+        status = true;
     }
 });
 
@@ -117,6 +119,7 @@ $('[name=telepon]').on('keyup change',function(){
             status = false;
         } else {
             resetAlert();
+            status = true;
         }
     }
 });
@@ -139,6 +142,7 @@ $('[name=email]').on('keyup change', function(){
                 status = false;
             }  else {
                 resetAlert();
+                status = true;
             }
         }
     }
@@ -157,6 +161,7 @@ $('[name=username]').on('keyup change', function(){
             status = false;
         }  else {
             resetAlert();
+            status = true;
         }
     }
 });
@@ -169,6 +174,7 @@ $('[name=password]').on('keyup change', function(){
         status = false;
     } else {
         resetAlert();
+        status = true;
     }
 });
 
@@ -179,6 +185,7 @@ $('[name=kodecaptcha').on('keyup change', function(){
         status = false;
     } else {
         resetAlert();
+        status = true;
     }
 });
 // Cek Nama Lengkap
