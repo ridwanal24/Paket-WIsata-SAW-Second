@@ -1,23 +1,23 @@
-<?php  
+<?php
 include 'koneksi.php';
 // Require composer autoload
 
 
-if(isset($_POST['content'])){
-    $htmlcode = htmlentities(htmlspecialchars($_POST['content']));
-    $query = $koneksi->query("INSERT INTO tb_print_hasil (content) VALUES ('$htmlcode');");
-    $query = $koneksi->query(" SELECT LAST_INSERT_ID() as id;");
-    while($row = $query->fetch_assoc()){
-        echo $row['id'];
-    }
-} else if(isset($_GET['id_cetak'])){
-    require_once 'vendor/autoload.php';
-// Create an instance of the class:
-$mpdf = new \Mpdf\Mpdf();
+if (isset($_POST['content'])) {
+  $htmlcode = htmlentities(htmlspecialchars($_POST['content']));
+  $query = $koneksi->query("INSERT INTO tb_print_hasil (content) VALUES ('$htmlcode');");
+  $query = $koneksi->query(" SELECT LAST_INSERT_ID() as id;");
+  while ($row = $query->fetch_assoc()) {
+    echo $row['id'];
+  }
+} else if (isset($_GET['id_cetak'])) {
+  require_once 'vendor/autoload.php';
+  // Create an instance of the class:
+  $mpdf = new \Mpdf\Mpdf();
 
-$ambil=$koneksi->query("SELECT * FROM tb_print_hasil WHERE id=".$_GET['id_cetak']);
+  $ambil = $koneksi->query("SELECT * FROM tb_print_hasil WHERE id=" . $_GET['id_cetak']);
 
-$content = '<!DOCTYPE html>
+  $content = '<!DOCTYPE html>
 <html>
 <head>
   <title>Daftar Paket</title>
@@ -1652,7 +1652,12 @@ $content = '<!DOCTYPE html>
       stroke-dashoffset: -136px;
     }
   }
-  
+
+  .reset {
+    padding: 0;
+    margin: 0;
+  }
+
   </style>
 
   <!-- <img src="images/logo.png" style="float: left; height: 90px">
@@ -1670,22 +1675,21 @@ $content = '<!DOCTYPE html>
 
   <hr style="border: 0.5px solid black; margin: 10px 5px 10px 5px;">
 -->
-  <div style="font-size: 12px; margin-left: 10px;">&nbsp; Tanggal CETAK: '.date("d-m-Y").'</div> <br>
+  <div style="font-size: 11px; margin-left: 10px; margin-bottom: -40px; margin-top: -20px;">&nbsp; Tanggal CETAK: ' . date("d-m-Y") . '</div> <br>
 ';
 
-  while($pecah = $ambil->fetch_assoc()){
+  while ($pecah = $ambil->fetch_assoc()) {
     $content .= html_entity_decode(htmlspecialchars_decode($pecah['content']));
-
   }
 
-$content .= '
+  $content .= '
 </body>
 </html>';
 
-// Write some HTML code:
-$mpdf->WriteHTML($content);
+  // Write some HTML code:
+  $mpdf->WriteHTML($content);
 
-// Output a PDF file directly to the browser
-$mpdf->Output("cetakpaket.pdf","I");
-$koneksi->query("DELETE FROM tb_print_hasil WHERE id=".$_GET['id_cetak']);
+  // Output a PDF file directly to the browser
+  $mpdf->Output("cetakpaket.pdf", "I");
+  $koneksi->query("DELETE FROM tb_print_hasil WHERE id=" . $_GET['id_cetak']);
 }
