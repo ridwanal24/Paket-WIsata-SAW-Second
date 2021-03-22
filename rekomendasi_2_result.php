@@ -2,6 +2,9 @@
 
 session_start();
 
+if ($_SESSION['code'] != $_POST['kodecaptcha']) {
+  header('location: rekomendasi_2_option.php?captcha_failed=jjkjj');
+}
 //koneksi ke database
 include 'koneksi.php';
 $query = $koneksi->query("SELECT * FROM tb_paketwisata_grup WHERE id_paketwisata_grup='$_POST[paket_wisata_grup]'");
@@ -16,6 +19,11 @@ $c1 = $kriteria[0] / 100;
 $c2 = $kriteria[1] / 100;
 $c3 = $kriteria[2] / 100;
 
+$sort = [
+  'harga' => $_POST['opsi_harga'],
+  'jumlah_wisata' => $_POST['opsi_jml_wisata'],
+  'lama_tour' => $_POST['opsi_lama_tour']
+]
 ?>
 
 <!doctype html>
@@ -194,6 +202,27 @@ $c3 = $kriteria[2] / 100;
           $bobot_harga = $c1;
           $bobot_jumlahwisata = $c2;
           $bobot_lamatour = $c3;
+
+          // Perangkingan
+          $query = $koneksi->query("SELECT * FROM tb_paketwisata JOIN tb_alternatif ON tb_paketwisata.id_paketwisata=tb_alternatif.id_paketwisata WHERE id_paketwisata_grup='$_POST[paket_wisata_grup]'");
+          $result = array();
+          while ($row = $query->fetch_assoc()) {
+            $result[] = [
+              'id' => $row['id_paketwisata'],
+              'harga' => $row['harga'],
+              'jumlah_wisata' => $row['jumlah_wisata'],
+              'lama_tour' => $row['lama_tour'],
+              'nama_paket' => $row['nama_paketwisata'],
+              'nilai' => round((($min['min1'] / $row['harga']) * $bobot_harga) +
+                (($row['jumlah_wisata'] / $max['max2']) * $bobot_jumlahwisata) +
+                (($row['lama_tour'] / $max['max3']) * $bobot_lamatour), 2)
+            ];
+          }
+
+          usort($result, function ($a, $b) {
+            return $b['nilai'] > $a['nilai'];
+          });
+
           ?>
 
           <div class="panel panel-default ml-5 mb-3 mr-5">
@@ -210,23 +239,80 @@ $c3 = $kriteria[2] / 100;
                   </tr>
                 </thead>
                 <tbody>
-                  <?php $nomor = 1; ?>
-                  <?php $ambil = mysqli_query($koneksi, "SELECT * FROM tb_paketwisata JOIN tb_alternatif ON tb_paketwisata.id_paketwisata=tb_alternatif.id_paketwisata WHERE id_paketwisata_grup='$_POST[paket_wisata_grup]'"); ?>
-                  <?php while ($pecah = mysqli_fetch_array($ambil)) { ?>
+                  <?php
+                  $nomor = 1;
+                  foreach ($result as $res) { ?>
+
                     <tr>
-                      <td><?php echo $nomor = $nomor; ?></td>
-                      <td><?php echo $pecah['nama_paketwisata']; ?></td>
-                      <td><?php echo round((($min['min1'] / $pecah['harga']) * $bobot_harga) +
-                            (($pecah['jumlah_wisata'] / $max['max2']) * $bobot_jumlahwisata) +
-                            (($pecah['lama_tour'] / $max['max3']) * $bobot_lamatour), 2); ?></td>
+                      <td><?php echo $nomor; ?></td>
+                      <td><?php echo $res['nama_paket']; ?></td>
+                      <td><?php echo $res['nilai']; ?></td>
                     </tr>
-                    <?php $nomor++; ?>
+
+                  <?php
+                    $nomor += 1;
+                  } ?>
+                </tbody>
+
+              </table>
+            </div>
+          </div><br>
+
+          <!-- Sortir Hasil Rekomendasi -->
+          <?php
+          $filter_result = array();
+
+          foreach ($result as $item) {
+            if ($item['harga'] == $sort['harga']) {
+              if ($item['jumlah_wisata'] == $sort['jumlah_wisata']) {
+                if ($item['lama_tour'] == $sort['lama_tour']) {
+                  // echo '<p>' . $item['nama_paket'] . '</p>';
+                  $filter_result[] = $item;
+                }
+              }
+            }
+          }
+          ?>
+
+          <div class="panel panel-default ml-5 mb-3 mr-5">
+            <div class="panel-heading">
+              <h6 class="panel-title">Hasil Rekomendasi</h6>
+            </div>
+            <div class="datatable">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Paket Wisata</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  // print_r(!is_null($filter_result));
+                  // print_r('d' == true);
+                  // die();
+                  if (count($filter_result) > 0) {
+                    $nomor = 1;
+                    foreach ($filter_result as $res) { ?>
+                      <tr>
+                        <td><?php echo $nomor; ?></td>
+                        <td><?php echo $res['nama_paket']; ?><a class="btn btn-primary float-right" style="padding:5px;" href="detail.php?id=<?php echo $res['id']; ?>">Detail</a></td>
+                      </tr>
+
+                    <?php
+                      $nomor += 1;
+                    }
+                  } else { ?>
+                    <tr>
+                      <td class="text-center font-italic" colspan=2>Paket Tidak Tersedia, Silahkan Coba Opsi Yang Lain</td>
+                    </tr>
                   <?php } ?>
                 </tbody>
 
               </table>
             </div>
           </div>
+
         </div>
         <div class="text-right mt-5">
           <button class="btn btn-primary" name="cetakPDF" value="Proses">Cetak PDF</button>
