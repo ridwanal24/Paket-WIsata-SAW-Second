@@ -65,24 +65,6 @@ include 'koneksi.php';
 
           <div class="card-body">
             <form method="post" action="rekomendasi_2_result.php" enctype="multipart/form-data" onsubmit="return check()">
-              <!--<div class="form-group">
-                    <label>Harga (C1)</label>
-                    <input type="number" class="form-control" name="bobot_hrg" required>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Jumlah Wisata (C2)</label>
-                    <input type="number" class="form-control" name="bobot_jmlwisata" required>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Lama Tour(C3)</label>
-                    <input type="number" class="form-control" name="bobot_lmtour" required>
-                  </div>
-
-                  <div class="text-right">
-                     <button class="btn btn-primary" name="cari" value="Proses">Cari</button>
-                  </div>-->
               <div class="form-group">
                 <label>Paket Wisata Tujuan</label>
                 <small class="text-danger paket-wisata-kosong"> *Paket Wisata Tujuan harap diisi.</small>
@@ -96,37 +78,65 @@ include 'koneksi.php';
                 </select>
               </div>
 
-              <!--
-                <div class="form-group">
-                <label>Prioritas Harga (C1)</label>
-                <select class="form-control" name="hrg">
-                  <option value="">--Pilih Prioritas Harga--</option>
-                  <option value="1">Murah</option>
-                  <option value="3">Sedang</option>
-                  <option value="5">Mahal</option>
+
+              <div class="form-group">
+                <label>Opsi Harga</label>
+                <small class="text-danger harga-kosong"> *Harga harap diisi.</small>
+                <select class="form-control" name="opsi_harga">
+                  <option value=""> -- Pilih Harga -- </option>
+                  <?php $query = $koneksi->query("SELECT * FROM tb_subkriteria WHERE id_kriteria=1");
+                  while ($row = $query->fetch_assoc()) {
+                  ?>
+                    <option value="<?php echo $row['bobot_subkriteria']; ?>"><?php echo $row['nama'] ?></option>
+                  <?php
+                  }
+                  ?>
                 </select>
               </div>
 
               <div class="form-group">
-                <label>Prioritas Jumlah Wisata (C2)</label>
-                <select class="form-control" name="jml_wisata">
-                  <option value="">--Pilih Prioritas--</option>
-                  <option value="1">Sedikit</option>
-                  <option value="3">Sedang</option>
-                  <option value="5">Banyak</option>
+                <label>Opsi Jumlah Wisata</label>
+                <small class="text-danger jumlah-wisata-kosong"> *Jumlah Wisata harap diisi.</small>
+                <select class="form-control" name="opsi_jml_wisata">
+                  <option value=""> -- Pilih Jumlah Wisata -- </option>
+                  <?php $query = $koneksi->query("SELECT * FROM tb_subkriteria WHERE id_kriteria=3");
+                  while ($row = $query->fetch_assoc()) {
+                  ?>
+                    <option value="<?php echo $row['bobot_subkriteria']; ?>"><?php echo $row['nama'] ?></option>
+                  <?php
+                  }
+                  ?>
                 </select>
               </div>
 
               <div class="form-group">
-                <label>Prioritas Lama Tour (C3)</label>
-                <select class="form-control" name="lm_tour">
-                  <option value="">--Pilih Prioritas--</option>
-                  <option value="1">Sebentar</option>
-                  <option value="3">Sedang</option>
-                  <option value="5">Lama</option>
+                <label>Opsi Lama Tour</label>
+                <small class="text-danger lama-tour-kosong"> *Lama Tour harap diisi.</small>
+                <select class="form-control" name="opsi_lama_tour">
+                  <option value=""> -- Pilih Lama Tour -- </option>
+                  <?php $query = $koneksi->query("SELECT * FROM tb_subkriteria WHERE id_kriteria=4");
+                  while ($row = $query->fetch_assoc()) {
+                  ?>
+                    <option value="<?php echo $row['bobot_subkriteria']; ?>"><?php echo $row['nama'] ?></option>
+                  <?php
+                  }
+                  ?>
                 </select>
-              </div> 
-              -->
+              </div>
+
+              <!-- Captcha -->
+              <div class="form-group text-center">
+                <img src="captcha.php" alt="gambar">
+              </div>
+              <div class="form-group mt-4 text-center">
+                <label>Masukan Captcha<sup class="text-danger"></sup></label>
+                <input name="kodecaptcha" value="" maxlength="5">
+                <small class="kodecaptcha-alert text-danger">Kode Captcha wajib diisi</small>
+                <?php if (isset($_GET['captcha_failed'])) { ?>
+                  <small class="text-danger"> <b>Kode Captcha Salah</b></small>
+                <?php } ?>
+              </div>
+
 
               <div class="text-right">
                 <button class="btn btn-primary" name="cari" value="Proses">Cari</button>
@@ -162,17 +172,69 @@ include 'koneksi.php';
   <script src="js/main.js"></script>
   <script>
     $(".paket-wisata-kosong").hide();
+    $(".jumlah-wisata-kosong").hide();
+    $(".lama-tour-kosong").hide();
+    $(".harga-kosong").hide();
+    $(".kodecaptcha-alert").hide();
+
     let status = false;
+    let status_paket;
+    let status_harga;
+    let status_jumlah;
+    let status_lama;
+    let status_captcha;
     let check = function() {
       if ($('select[name=paket_wisata_grup]').val() == "") {
-        status = false;
+        status_paket = false;
         $(".paket-wisata-kosong").show();
-        console.log("status ", status);
+        console.log("status_paket ", status_paket);
       } else {
         $(".paket-wisata-kosong").hide();
-        status = true;
-        console.log("status ", status);
+        status_paket = true;
+        console.log("status_paket ", status);
       }
+
+      if ($('select[name=opsi_harga]').val() == "") {
+        status_harga = false;
+        $(".harga-kosong").show();
+        console.log("status_harga ", status_harga);
+      } else {
+        $(".harga-kosong").hide();
+        status_harga = true;
+        console.log("status_harga ", status_harga);
+      }
+
+      if ($('select[name=opsi_jml_wisata]').val() == "") {
+        status_jumlah = false;
+        $(".jumlah-wisata-kosong").show();
+        console.log("status_jumlah ", status_jumlah);
+      } else {
+        $(".jumlah-wisata-kosong").hide();
+        status_jumlah = true;
+        console.log("status_jumlah ", status_jumlah);
+      }
+
+      if ($('select[name=opsi_lama_tour]').val() == "") {
+        status_lama = false;
+        $(".lama-tour-kosong").show();
+        console.log("status_lama ", status_lama);
+      } else {
+        $(".lama-tour-kosong").hide();
+        status_lama = true;
+        console.log("status_lama ", status_lama);
+      }
+
+      if ($('[name=kodecaptcha]').val() == "") {
+        status_captcha = false;
+        $(".kodecaptcha-alert").show();
+        console.log("status_captcha ", status_captcha);
+      } else {
+        $(".kodecaptcha-alert").hide();
+        status_captcha = true;
+        console.log("status_captcha ", status_captcha);
+      }
+
+      status = status_paket && status_harga && status_jumlah && status_lama && status_captcha;
 
       return status;
     }
