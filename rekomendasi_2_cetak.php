@@ -1120,14 +1120,14 @@ if (isset($_POST['content'])) {
   }
   
   .cover_1 .heading {
-    font-size: 50px;
+    font-size: 30px;
     color: white;
     font-weight: 300;
   }
   
   .heading-wrap .heading {
-    font-size: 50px;
-    margin-bottom: 30px;
+    font-size: 30px;
+    margin-bottom: 10px;
   }
   
   .heading-wrap .sub-heading {
@@ -1660,7 +1660,7 @@ if (isset($_POST['content'])) {
 
   </style>
 
-  <!-- <img src="images/logo.png" style="float: left; height: 90px">
+ <img src="images/logo.png" style="float: left; height: 90px">
 
   <div style="margin-left: 20px">
     <strong>Daftar Paket</strong><br>
@@ -1674,8 +1674,8 @@ if (isset($_POST['content'])) {
   </div> 
 
   <hr style="border: 0.5px solid black; margin: 10px 5px 10px 5px;">
--->
-  <div style="font-size: 11px; margin-left: 10px; margin-bottom: -40px; margin-top: -20px;">&nbsp; Tanggal CETAK: ' . date("d-m-Y") . '</div> <br>
+
+  <div style="font-size: 11px; margin-left: 10px; margin-bottom: 0px; margin-top: 0px;">&nbsp; Tanggal CETAK: ' . date("d-m-Y") . '</div> <br>
 ';
 
   while ($pecah = $ambil->fetch_assoc()) {
@@ -1686,6 +1686,7 @@ if (isset($_POST['content'])) {
 </body>
 </html>';
 
+  $content = str_replace('<h2 class="heading">Hasil Rekomendasi Paket Wisata</h2>', '<h6 class="heading" style="margin-top:-40px;">Hasil Rekomendasi Paket Wisata</h6>', $content);
   // Write some HTML code:
   $mpdf->WriteHTML($content);
 
