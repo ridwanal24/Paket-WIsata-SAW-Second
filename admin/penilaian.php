@@ -1,10 +1,34 @@
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Masukan Nilai Bobot Masing - Masing Kriteria</h6>
-    </div>
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Masukan Nilai Bobot Masing - Masing Kriteria</h6>
+  </div>
   <div class="card-body">
     <div class="table-responsive">
       <form method="post" action="index.php?page=penilaianhasil">
+        <?php
+        $query = $koneksi->query("SELECT * FROM tb_paketwisata_grup");
+        ?>
+
+        <div class="row">
+          <div class="col-md">
+            <div class="form-group">
+              <label>Paket Wisata Tujuan</label>
+              <select name="paket_tujuan" class="form-control">
+                <option value=""> -- Pilih Wisata Tujuan -- </option>
+
+                <?php
+                while ($row = $query->fetch_assoc()) { ?>
+
+                  <option value="<?php echo $row['id_paketwisata_grup']; ?>"><?php echo $row['nama_paketwisata']; ?></option>
+                <?php
+                }
+                ?>
+
+              </select>
+            </div>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
@@ -12,9 +36,9 @@
               <select class="form-control" name="hrg">
                 <option value="">--Pilih Harga--</option>
                 <?php $ambil2 = $koneksi->query("SELECT * FROM tb_subkriteria where id_kriteria='1' order by id_subkriteria asc;");
-                  while ($setiap = $ambil2->fetch_assoc()) { 
+                while ($setiap = $ambil2->fetch_assoc()) {
                 ?>
-                <option value="<?php echo $setiap["bobot_subkriteria"] ?>"><?php echo $setiap["nama"]; ?></option>
+                  <option value="<?php echo $setiap["id_subkriteria"] ?>"><?php echo $setiap["nama"]; ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -25,9 +49,9 @@
               <select class="form-control" name="jml_wisata">
                 <option value="">--Pilih Jumlah Wisata--</option>
                 <?php $ambil2 = $koneksi->query("SELECT * FROM tb_subkriteria where id_kriteria='3' order by id_subkriteria asc;");
-                  while ($setiap = $ambil2->fetch_assoc()) { 
+                while ($setiap = $ambil2->fetch_assoc()) {
                 ?>
-                <option value="<?php echo $setiap["bobot_subkriteria"] ?>"><?php echo $setiap["nama"]; ?></option>
+                  <option value="<?php echo $setiap["id_subkriteria"] ?>"><?php echo $setiap["nama"]; ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -38,9 +62,9 @@
               <select class="form-control" name="lm_tour">
                 <option value="">--Pilih Lama Tour --</option>
                 <?php $ambil2 = $koneksi->query("SELECT * FROM tb_subkriteria where id_kriteria='4' order by id_subkriteria asc;");
-                  while ($setiap = $ambil2->fetch_assoc()) { 
+                while ($setiap = $ambil2->fetch_assoc()) {
                 ?>
-                <option value="<?php echo $setiap["bobot_subkriteria"] ?>"><?php echo $setiap["nama"]; ?></option>
+                  <option value="<?php echo $setiap["id_subkriteria"] ?>"><?php echo $setiap["nama"]; ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -49,8 +73,8 @@
             <button class="btn btn-primary" value="Proses" name="lihat">Proses</button><br><br>
           </div>
         </div>
-        </div>
-      </form>
     </div>
+    </form>
   </div>
+</div>
 </div>
