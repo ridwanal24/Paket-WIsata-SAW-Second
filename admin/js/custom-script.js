@@ -79,20 +79,9 @@ $('[name=cetakPDF]').click(function() {
       success: data => {
         $('[name=cetakPDF]').attr('disabled', false);
         $('[name=cetakPDF]').html('<i class="fas fa-print"></i> Export PDF');
-        // let btn_cetak = document.createElement('a');
-        // let href = document.createAttribute('href');
-        // let target = document.createAttribute('target');
-        // let id = document.createAttribute('id');
-        // href.value = 'cetakpenilaian.php?id_cetak=' + data;
-        // target.value = '_blank';
-        // id.value = 'btnOpen';
-        // btn_cetak.setAttributeNode(href);
-        // btn_cetak.setAttributeNode(target);
-        // btn_cetak.setAttributeNode(id);
-        // document.querySelector('container').appendChild(btn_cetak);
-        
-        // document.querySelector('#btnOpen').click();
-        window.open('cetakpenilaian.php?id_cetak=' + data,'_blank');
+
+        // window.open('cetakpenilaian.php?id_cetak=' + data,'_blank');
+        window.location = 'cetakpenilaian.php?id_cetak=' + data;
     }
     });
   });
