@@ -40,7 +40,7 @@
                 <?php $ambil2 = $koneksi->query("SELECT * FROM tb_subkriteria where id_kriteria='1' order by id_subkriteria asc;");
                 while ($setiap = $ambil2->fetch_assoc()) {
                 ?>
-                  <option value="<?php echo $setiap["id_subkriteria"] ?>"><?php echo $setiap["nama"]; ?></option>
+                  <option value="<?php echo $setiap["bobot_subkriteria"] . '|' . $setiap['nama'] ?>"><?php echo $setiap["nama"]; ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -54,7 +54,7 @@
                 <?php $ambil2 = $koneksi->query("SELECT * FROM tb_subkriteria where id_kriteria='3' order by id_subkriteria asc;");
                 while ($setiap = $ambil2->fetch_assoc()) {
                 ?>
-                  <option value="<?php echo $setiap["id_subkriteria"] ?>"><?php echo $setiap["nama"]; ?></option>
+                  <option value="<?php echo $setiap["bobot_subkriteria"] . '|' . $setiap['nama'] ?>"><?php echo $setiap["nama"]; ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -68,7 +68,7 @@
                 <?php $ambil2 = $koneksi->query("SELECT * FROM tb_subkriteria where id_kriteria='4' order by id_subkriteria asc;");
                 while ($setiap = $ambil2->fetch_assoc()) {
                 ?>
-                  <option value="<?php echo $setiap["id_subkriteria"] ?>"><?php echo $setiap["nama"]; ?></option>
+                  <option value="<?php echo $setiap["bobot_subkriteria"] . '|' . $setiap['nama'] ?>"><?php echo $setiap["nama"]; ?></option>
                 <?php } ?>
               </select>
             </div>
