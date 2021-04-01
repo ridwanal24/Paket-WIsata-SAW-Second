@@ -88,11 +88,11 @@ while ($row = $query->fetch_assoc()) {
                 FROM tb_alternatif
                 JOIN tb_paketwisata
                 ON tb_alternatif.id_paketwisata=tb_paketwisata.id_paketwisata
-                WHERE id_paketwisata_grup=" . $_POST['paket_tujuan']);
-  // .
-  // " AND tb_alternatif.harga=" . $bobot_sub['harga'] .
-  // " AND tb_alternatif.lama_tour=" . $bobot_sub['lama'] .
-  // " AND tb_alternatif.jumlah_wisata=" . $bobot_sub['jumlah']);
+                WHERE id_paketwisata_grup=" . $_POST['paket_tujuan'] //);
+    .
+    " AND tb_alternatif.harga=" . $bobot_sub['harga'] .
+    " AND tb_alternatif.lama_tour=" . $bobot_sub['lama'] .
+    " AND tb_alternatif.jumlah_wisata=" . $bobot_sub['jumlah']);
 
   $max = mysqli_fetch_assoc($carimax);
   // print_r($max);
@@ -104,11 +104,11 @@ while ($row = $query->fetch_assoc()) {
   FROM tb_alternatif
   JOIN tb_paketwisata
   ON tb_alternatif.id_paketwisata=tb_paketwisata.id_paketwisata
-  WHERE id_paketwisata_grup=" . $_POST['paket_tujuan']);
-  // .
-  //   " AND tb_alternatif.harga=" . $bobot_sub['harga'] .
-  //   " AND tb_alternatif.lama_tour=" . $bobot_sub['lama'] .
-  //   " AND tb_alternatif.jumlah_wisata=" . $bobot_sub['jumlah']);
+  WHERE id_paketwisata_grup=" . $_POST['paket_tujuan'] //);
+    .
+    " AND tb_alternatif.harga=" . $bobot_sub['harga'] .
+    " AND tb_alternatif.lama_tour=" . $bobot_sub['lama'] .
+    " AND tb_alternatif.jumlah_wisata=" . $bobot_sub['jumlah']);
 
   $min = mysqli_fetch_assoc($carimin);
   // print_r($min);
@@ -141,11 +141,11 @@ while ($row = $query->fetch_assoc()) {
             ON pw.id_paketwisata=a.id_paketwisata 
             JOIN tb_paketwisata_grup as pwg 
             ON pw.id_paketwisata_grup=pwg.id_paketwisata_grup 
-            WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan']);
-            // .
-            //   " AND a.harga=" . $bobot_sub['harga'] .
-            //   " AND a.lama_tour=" . $bobot_sub['lama'] .
-            //   " AND a.jumlah_wisata=" . $bobot_sub['jumlah']);
+            WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan'] //);
+              .
+              " AND a.harga=" . $bobot_sub['harga'] .
+              " AND a.lama_tour=" . $bobot_sub['lama'] .
+              " AND a.jumlah_wisata=" . $bobot_sub['jumlah']);
             ?>
 
             <?php while ($pecah = mysqli_fetch_array($ambil)) { ?>
@@ -187,8 +187,11 @@ while ($row = $query->fetch_assoc()) {
           <tbody>
             <?php $nomor = 1; ?>
             <?php
-            // $ambil = mysqli_query($koneksi, "SELECT pw.nama_paketwisata, a.harga, a.jumlah_wisata,a.lama_tour FROM tb_paketwisata as pw JOIN tb_alternatif as a ON pw.id_paketwisata=a.id_paketwisata JOIN tb_paketwisata_grup as pwg ON pw.id_paketwisata_grup=pwg.id_paketwisata_grup WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan'] . " AND a.id_alternatif IN(" . $id_subk['harga'] . "," . $id_subk['lama'] . "," . $id_subk['jumlah'] . ")");
-            $ambil = mysqli_query($koneksi, "SELECT pw.nama_paketwisata, a.harga, a.jumlah_wisata,a.lama_tour FROM tb_paketwisata as pw JOIN tb_alternatif as a ON pw.id_paketwisata=a.id_paketwisata JOIN tb_paketwisata_grup as pwg ON pw.id_paketwisata_grup=pwg.id_paketwisata_grup WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan']);
+            $ambil = mysqli_query($koneksi, "SELECT pw.nama_paketwisata, a.harga, a.jumlah_wisata,a.lama_tour FROM tb_paketwisata as pw JOIN tb_alternatif as a ON pw.id_paketwisata=a.id_paketwisata JOIN tb_paketwisata_grup as pwg ON pw.id_paketwisata_grup=pwg.id_paketwisata_grup WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan'] .
+              " AND a.harga=" . $bobot_sub['harga'] .
+              " AND a.lama_tour=" . $bobot_sub['lama'] .
+              " AND a.jumlah_wisata=" . $bobot_sub['jumlah']);
+            // $ambil = mysqli_query($koneksi, "SELECT pw.nama_paketwisata, a.harga, a.jumlah_wisata,a.lama_tour FROM tb_paketwisata as pw JOIN tb_alternatif as a ON pw.id_paketwisata=a.id_paketwisata JOIN tb_paketwisata_grup as pwg ON pw.id_paketwisata_grup=pwg.id_paketwisata_grup WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan']);
             ?>
             <?php while ($pecah = mysqli_fetch_array($ambil)) { ?>
               <tr>
