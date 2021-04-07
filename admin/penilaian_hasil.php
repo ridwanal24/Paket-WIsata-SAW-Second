@@ -88,11 +88,11 @@ while ($row = $query->fetch_assoc()) {
                 FROM tb_alternatif
                 JOIN tb_paketwisata
                 ON tb_alternatif.id_paketwisata=tb_paketwisata.id_paketwisata
-                WHERE id_paketwisata_grup=" . $_POST['paket_tujuan'] //);
-    .
-    " AND tb_alternatif.harga=" . $bobot_sub['harga'] .
-    " AND tb_alternatif.lama_tour=" . $bobot_sub['lama'] .
-    " AND tb_alternatif.jumlah_wisata=" . $bobot_sub['jumlah']);
+                WHERE id_paketwisata_grup=" . $_POST['paket_tujuan']);
+  // .
+  // " AND tb_alternatif.harga=" . $bobot_sub['harga'] .
+  // " AND tb_alternatif.lama_tour=" . $bobot_sub['lama'] .
+  // " AND tb_alternatif.jumlah_wisata=" . $bobot_sub['jumlah']);
 
   $max = mysqli_fetch_assoc($carimax);
   // print_r($max);
@@ -104,11 +104,11 @@ while ($row = $query->fetch_assoc()) {
   FROM tb_alternatif
   JOIN tb_paketwisata
   ON tb_alternatif.id_paketwisata=tb_paketwisata.id_paketwisata
-  WHERE id_paketwisata_grup=" . $_POST['paket_tujuan'] //);
-    .
-    " AND tb_alternatif.harga=" . $bobot_sub['harga'] .
-    " AND tb_alternatif.lama_tour=" . $bobot_sub['lama'] .
-    " AND tb_alternatif.jumlah_wisata=" . $bobot_sub['jumlah']);
+  WHERE id_paketwisata_grup=" . $_POST['paket_tujuan']);
+  // .
+  // " AND tb_alternatif.harga=" . $bobot_sub['harga'] .
+  // " AND tb_alternatif.lama_tour=" . $bobot_sub['lama'] .
+  // " AND tb_alternatif.jumlah_wisata=" . $bobot_sub['jumlah']);
 
   $min = mysqli_fetch_assoc($carimin);
   // print_r($min);
@@ -141,11 +141,11 @@ while ($row = $query->fetch_assoc()) {
             ON pw.id_paketwisata=a.id_paketwisata 
             JOIN tb_paketwisata_grup as pwg 
             ON pw.id_paketwisata_grup=pwg.id_paketwisata_grup 
-            WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan'] //);
-              .
-              " AND a.harga=" . $bobot_sub['harga'] .
-              " AND a.lama_tour=" . $bobot_sub['lama'] .
-              " AND a.jumlah_wisata=" . $bobot_sub['jumlah']);
+            WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan']);
+            // .
+            // " AND a.harga=" . $bobot_sub['harga'] .
+            // " AND a.lama_tour=" . $bobot_sub['lama'] .
+            // " AND a.jumlah_wisata=" . $bobot_sub['jumlah']);
             ?>
 
             <?php while ($pecah = mysqli_fetch_array($ambil)) { ?>
@@ -187,10 +187,13 @@ while ($row = $query->fetch_assoc()) {
           <tbody>
             <?php $nomor = 1; ?>
             <?php
-            $ambil = mysqli_query($koneksi, "SELECT pw.nama_paketwisata, a.harga, a.jumlah_wisata,a.lama_tour FROM tb_paketwisata as pw JOIN tb_alternatif as a ON pw.id_paketwisata=a.id_paketwisata JOIN tb_paketwisata_grup as pwg ON pw.id_paketwisata_grup=pwg.id_paketwisata_grup WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan'] .
-              " AND a.harga=" . $bobot_sub['harga'] .
-              " AND a.lama_tour=" . $bobot_sub['lama'] .
-              " AND a.jumlah_wisata=" . $bobot_sub['jumlah']);
+            $ambil = mysqli_query($koneksi, "SELECT pw.nama_paketwisata, a.harga, a.jumlah_wisata,a.lama_tour FROM tb_paketwisata as pw JOIN tb_alternatif as a ON pw.id_paketwisata=a.id_paketwisata JOIN tb_paketwisata_grup as pwg ON pw.id_paketwisata_grup=pwg.id_paketwisata_grup WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan']);
+            // .
+            // " AND a.harga=" . $bobot_sub['harga'] .
+            // " AND a.lama_tour=" . $bobot_sub['lama'] .
+            // " AND a.jumlah_wisata=" . $bobot_sub['jumlah']);
+
+
             // $ambil = mysqli_query($koneksi, "SELECT pw.nama_paketwisata, a.harga, a.jumlah_wisata,a.lama_tour FROM tb_paketwisata as pw JOIN tb_alternatif as a ON pw.id_paketwisata=a.id_paketwisata JOIN tb_paketwisata_grup as pwg ON pw.id_paketwisata_grup=pwg.id_paketwisata_grup WHERE pwg.id_paketwisata_grup=" . $_POST['paket_tujuan']);
             ?>
             <?php while ($pecah = mysqli_fetch_array($ambil)) { ?>
@@ -220,18 +223,16 @@ while ($row = $query->fetch_assoc()) {
 
   $rekomendasi = array();
   while ($pecah = mysqli_fetch_array($ambil)) {
-    if ($pecah['harga'] == $bobot_sub['harga'] && $pecah['lama_tour'] == $bobot_sub['lama'] || $pecah['jumlah_wisata'] == $bobot_sub['jumlah']) {
+    // if ($pecah['harga'] == $bobot_sub['harga'] && $pecah['lama_tour'] == $bobot_sub['lama'] || $pecah['jumlah_wisata'] == $bobot_sub['jumlah']) {
+    if (true) {
       $rekomendasi[] = [
         'nama_paket' => $pecah['nama_paketwisata'],
-        'lama_tour' => round($pecah['lama_tour'] / $max['max3'] * $bobot_lamatour, 2),
-        'jumlah_wisata' => round($pecah['jumlah_wisata'] / $max['max2'] * $bobot_jumlahwisata, 2),
-        'harga' => round($min['min1'] / $pecah['harga'] * $bobot_harga, 2),
-        // 'lama_tour' => round($pecah['lama_tour'] / $max['max3'], 2) . 'x' . $bobot_lamatour,
-        // 'jumlah_wisata' => round($pecah['jumlah_wisata'] / $max['max2'], 2) . 'x' . $bobot_jumlahwisata,
-        // 'harga' => round($min['min1'] / $pecah['harga'], 2) . 'x' . $bobot_harga,
-        'nilai' => round((($min['min1'] / $pecah['harga']) * $bobot_harga) +
-          (($pecah['jumlah_wisata'] / $max['max2']) * $bobot_jumlahwisata) +
-          (($pecah['lama_tour'] / $max['max3']) * $bobot_lamatour), 2)
+        'lama_tour' => $pecah['lama_tour'],
+        'jumlah_wisata' => $pecah['jumlah_wisata'],
+        'harga' => $pecah['harga'],
+        'nilai' => round((($min['min1'] / $pecah['harga']) * ($bobot[0] / array_sum($bobot))) +
+          (($pecah['jumlah_wisata'] / $max['max2']) * ($bobot[1] / array_sum($bobot))) +
+          (($pecah['lama_tour'] / $max['max3']) * ($bobot[2] / array_sum($bobot))), 2)
       ];
     }
   }
@@ -273,9 +274,9 @@ while ($row = $query->fetch_assoc()) {
                     <tr>
                       <td><?php echo $nomor; ?></td>
                       <td><?php echo $item['nama_paket']; ?></td>
-                      <td><?php echo $item['harga']; ?></td>
-                      <td><?php echo $item['jumlah_wisata']; ?></td>
-                      <td><?php echo $item['lama_tour']; ?></td>
+                      <td><?php echo round($min['min1'] / $item['harga'] * ($bobot[0] / array_sum($bobot)), 2); ?></td>
+                      <td><?php echo round($item['jumlah_wisata'] / $max['max2'] * ($bobot[1] / array_sum($bobot)), 2); ?></td>
+                      <td><?php echo round($item['lama_tour'] / $max['max3'] * ($bobot[2] / array_sum($bobot)), 2); ?></td>
                       <td><?php echo $item['nilai']; ?></td>
                     </tr>
                 <?php
@@ -292,6 +293,17 @@ while ($row = $query->fetch_assoc()) {
       </div>
     </div>
 
+    <?php
+    $filtered = [];
+
+    foreach ($rekomendasi as $item) {
+      if ($item['harga'] == $bobot_sub['harga'] && $item['jumlah_wisata'] == $bobot_sub['jumlah'] && $item['lama_tour'] == $bobot_sub['lama']) {
+        $filtered[] = $item;
+      }
+    }
+
+    ?>
+
     <!-- Kesimpulan -->
     <div class="col-lg">
       <div class="card shadow mb-4">
@@ -300,8 +312,8 @@ while ($row = $query->fetch_assoc()) {
         </div>
         <div class="card-body">
           <?php
-          if (count($rekomendasi) != 0) { ?>
-            Dari hasil perhitungan diatas, maka pemilihan paket wisata terbaik sesuai dengan kriteria adalah <?php echo '<b>' . $rekomendasi[0]['nama_paket'] . '</b>'; ?> dengan nilai <?php print($rekomendasi[0]['nilai']); ?>
+          if (count($filtered) != 0) { ?>
+            Dari hasil perhitungan diatas, maka pemilihan paket wisata terbaik <b>sesuai dengan kriteria yang dipilih</b> adalah <?php echo '<b>' . $filtered[0]['nama_paket'] . '</b>'; ?> dengan nilai <?php print($filtered[0]['nilai']); ?>
           <?php
           } else {
             echo 'Hasil tidak tersedia';

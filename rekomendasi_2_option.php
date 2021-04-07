@@ -87,7 +87,7 @@ include 'koneksi.php';
                   <?php $query = $koneksi->query("SELECT * FROM tb_subkriteria WHERE id_kriteria=1");
                   while ($row = $query->fetch_assoc()) {
                   ?>
-                    <option value="<?php echo $row['bobot_subkriteria']; ?>"><?php echo $row['nama'] ?></option>
+                    <option value="<?php echo $row['bobot_subkriteria'] . '|' . $row['nama']; ?>"><?php echo $row['nama'] ?></option>
                   <?php
                   }
                   ?>
@@ -102,7 +102,7 @@ include 'koneksi.php';
                   <?php $query = $koneksi->query("SELECT * FROM tb_subkriteria WHERE id_kriteria=3");
                   while ($row = $query->fetch_assoc()) {
                   ?>
-                    <option value="<?php echo $row['bobot_subkriteria']; ?>"><?php echo $row['nama'] ?></option>
+                    <option value="<?php echo $row['bobot_subkriteria'] . '|' . $row['nama']; ?>"><?php echo $row['nama'] ?></option>
                   <?php
                   }
                   ?>
@@ -117,7 +117,7 @@ include 'koneksi.php';
                   <?php $query = $koneksi->query("SELECT * FROM tb_subkriteria WHERE id_kriteria=4");
                   while ($row = $query->fetch_assoc()) {
                   ?>
-                    <option value="<?php echo $row['bobot_subkriteria']; ?>"><?php echo $row['nama'] ?></option>
+                    <option value="<?php echo $row['bobot_subkriteria'] . '|' . $row['nama']; ?>"><?php echo $row['nama'] ?></option>
                   <?php
                   }
                   ?>
