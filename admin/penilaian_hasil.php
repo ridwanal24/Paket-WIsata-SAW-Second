@@ -245,6 +245,17 @@ while ($row = $query->fetch_assoc()) {
   ?>
 
 
+<?php
+    $filtered = [];
+
+    foreach ($rekomendasi as $item) {
+      if ($item['harga'] == $bobot_sub['harga'] || $item['jumlah_wisata'] == $bobot_sub['jumlah'] || $item['lama_tour'] == $bobot_sub['lama']) {
+        $filtered[] = $item;
+      }
+    }
+
+    ?>
+
   <div class="row">
     <div class="col-lg-12">
       <div class="card shadow mb-4">
@@ -269,8 +280,8 @@ while ($row = $query->fetch_assoc()) {
 
                 <?php
                 $nomor = 1;
-                if (count($rekomendasi) != 0) {
-                  foreach ($rekomendasi as $item) { ?>
+                if (count($filtered) != 0) {
+                  foreach ($filtered as $item) { ?>
                     <tr>
                       <td><?php echo $nomor; ?></td>
                       <td><?php echo $item['nama_paket']; ?></td>
@@ -293,16 +304,7 @@ while ($row = $query->fetch_assoc()) {
       </div>
     </div>
 
-    <?php
-    $filtered = [];
-
-    foreach ($rekomendasi as $item) {
-      if ($item['harga'] == $bobot_sub['harga'] && $item['jumlah_wisata'] == $bobot_sub['jumlah'] && $item['lama_tour'] == $bobot_sub['lama']) {
-        $filtered[] = $item;
-      }
-    }
-
-    ?>
+    
 
     <!-- Kesimpulan -->
     <div class="col-lg">

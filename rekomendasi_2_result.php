@@ -160,7 +160,7 @@ $namaSubKriteria = [explode('|', $_POST['opsi_harga'])[1], explode('|', $_POST['
             $min = mysqli_fetch_assoc($carimin);
 
             ?>
-
+            <br>
             <div class="panel panel-default ml-5 mb-3 mr-5">
               <div class="panel-heading">
                 <h6 class="panel-title">Acuan Bobot Kriteria</h6>
@@ -301,6 +301,18 @@ $namaSubKriteria = [explode('|', $_POST['opsi_harga'])[1], explode('|', $_POST['
 
             ?>
 
+            <!-- Sortir Hasil Rekomendasi -->
+            <?php
+            $filter_result = array();
+
+            foreach ($result as $item) {
+              if ($item['harga'] == $sort['harga'] || $item['jumlah_wisata'] == $sort['jumlah_wisata'] || $item['lama_tour'] == $sort['lama_tour']) {
+                
+                    $filter_result[] = $item;
+              }
+            }
+            ?>
+
             <div class="panel panel-default ml-5 mb-3 mr-5">
               <div class="panel-heading">
                 <h6 class="panel-title">Rekomendasi Paket Wisata Terbaik</h6>
@@ -320,7 +332,7 @@ $namaSubKriteria = [explode('|', $_POST['opsi_harga'])[1], explode('|', $_POST['
                   <tbody>
                     <?php
                     $nomor = 1;
-                    foreach ($result as $res) { ?>
+                    foreach ($filter_result as $res) { ?>
 
                       <tr>
                         <td><?php echo $nomor; ?></td>
@@ -340,21 +352,7 @@ $namaSubKriteria = [explode('|', $_POST['opsi_harga'])[1], explode('|', $_POST['
               </div>
             </div><br>
 
-            <!-- Sortir Hasil Rekomendasi -->
-            <?php
-            $filter_result = array();
-
-            foreach ($result as $item) {
-              if ($item['harga'] == $sort['harga']) {
-                if ($item['jumlah_wisata'] == $sort['jumlah_wisata']) {
-                  if ($item['lama_tour'] == $sort['lama_tour']) {
-                    // echo '<p>' . $item['nama_paket'] . '</p>';
-                    $filter_result[] = $item;
-                  }
-                }
-              }
-            }
-            ?>
+            
 
             <div class="panel panel-default ml-5 mb-3 mr-5">
               <div class="panel-heading">
